@@ -30,9 +30,9 @@ function love.load()
   player = Player.new(gameworld,1,1)
   gameworld:addEntity(player)
   gameworld:addEntity(OilResource.new(gameworld,5,2,5,5))
-  gameworld:addEntity(OilResource.new(gameworld,5,4,5,5))
+  gameworld:addEntity(OilResource.new(gameworld,10,4,5,5))
   gameworld:addEntity(OilResource.new(gameworld,5,6,5,5))
-  gameworld:addEntity(OilHarvester.new(gameworld,8,5,5,0))
+  gameworld:addEntity(OilHarvester.new(gameworld,8,5,10,0))
   selectedblock = 1
   gamescale = 20
   offx, offy = 0,0

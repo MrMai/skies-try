@@ -12,7 +12,11 @@ function utils.split(inputstr, sep)
 end
 
 function utils.distanceFrom(x1,y1,x2,y2)
-  return math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
+  return utils.pythag(utils.pointVec(x1,y1,x2,y2))
+end
+
+function utils.pythag(x,y)
+  return math.sqrt(math.pow(x, 2) + math.pow(y, 2))
 end
 
 function utils.indexSearch(k, plist)
@@ -21,6 +25,18 @@ function utils.indexSearch(k, plist)
     if v then return v end
   end
 end
+
+function utils.pointVec(x1,y1,x2,y2)
+  return x2 - x1, y2 - y1
+end
+
+function utils.scaledVec(x1,y1,x2,y2,dist)
+  dist = dist or 1
+  local vx, vy = utils.pointVec(x1,y1,x2,y2)
+  local diag = utils.pytag(vx,vy)
+  return vx / diag * dist, vy / diag * dist
+end
+
 
 function utils.createClass(...) -- a method to create multiple inheritance classes
   local c = {}

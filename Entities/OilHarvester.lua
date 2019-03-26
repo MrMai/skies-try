@@ -24,7 +24,7 @@ function OilHarvester.new(world,x,y,max,current)
   o.behaviorList["ContainsOil"] = containsOil
   table.insert(o.behaviors, containsOil)
 
-  local harvestOil = HarvestOil.new(world, o, containsOil, OilHarvester.allowed, 5, 2)
+  local harvestOil = HarvestOil.new(world, o, containsOil, OilHarvester.allowed, 5, 0.6)
   o.behaviorList["HarvestOil"] = harvestOil
   table.insert(o.behaviors, harvestOil)
 
