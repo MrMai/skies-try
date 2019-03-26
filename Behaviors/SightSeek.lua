@@ -3,6 +3,7 @@ require "ItemAttributes/Default"
 
 SightSeek = {}
 SightSeek.__index = SightSeek
+SightSeek.filter = function(item, other)
   if other.id ~= nil then return 'touch' end
   -- else return nil
 end
