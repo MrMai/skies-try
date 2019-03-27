@@ -31,5 +31,8 @@ function Control:update(dt)
     vx = vx / 1.414213562373095 -- square root of two
     vy = vy / 1.414213562373095
   end
+  if(vx or vy)then
+    self.entity.currently["Controlling"] = true
+  end
   self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + vx, self.entity.y + vy, Default.filter)
 end

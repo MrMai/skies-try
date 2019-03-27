@@ -28,9 +28,11 @@ end
 
 function HarvestOil:update(dt)
   if(not self.storage:isFull())then
+    local active = false
     for i=1, #self.sources do
       local amount = self.speed / #self.sources * dt
       if(not self.sources[i].behaviorList["ContainsOil"]:isEmpty())then
+        active = true
         local leftover = self.storage:fill(amount)
         if(leftover > 0)then
           self.sources[i].behaviorList["ContainsOil"]:use(amount - leftover)
@@ -42,5 +44,6 @@ function HarvestOil:update(dt)
         i = i -1
       end
     end
+    self.entity.currently["HarvestingOil"] = active
   end
 end

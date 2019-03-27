@@ -6,3 +6,7 @@ Default.filter = function(item, other)
   end
   -- else return nil
 end
+Default.sightFilter = function(item, other)
+  if other.id ~= nil then return 'touch' end
+  -- else return nil
+end

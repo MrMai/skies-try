@@ -8,6 +8,7 @@ function Entity.new(x,y)
   o.x, o.y = x, y
   o.behaviorList = {}
   o.behaviors = {}
+  o.currently = {}
   setmetatable(o, Entity)
   return o
 end

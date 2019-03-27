@@ -26,10 +26,22 @@ function utils.indexSearch(k, plist)
   end
 end
 
+function utils.round(x)
+  if(x - math.floor(x) >= 0.5)then
+    return math.ceil(x)
+  else
+    return math.floor(x)
+  end
+end
+
 function utils.pointVec(x1,y1,x2,y2)
   return x2 - x1, y2 - y1
 end
 
+function utils.angleVec(angle, mag)
+  mag = mag or 1
+  return math.cos(angle) * mag, math.sin(angle) * mag
+end
 function utils.scaledVec(x1,y1,x2,y2,dist)
   dist = dist or 1
   return utils.scaleVec(x2-x1,y2-y1,dist)
