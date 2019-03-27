@@ -43,13 +43,13 @@ function SightSeek:update(dt)
     if(#allowed > 0)then
       self.target = self.world.entities[allowed[math.random(1, #allowed)]]
       self.waiting = 0
-      fx, fy, cols, num = self:cast(self.target:getXCenter(), self.target:getYCenter())
+      local fx, fy, cols, num = utils.raycast(self.world.world, self, SightSeek.filter, self.target:getXCenter(), self.target:getYCenter(), self.target.x, self.target.y)
       if(num > 0)then
         self.target = nil
       end
     end
   else
-    fx, fy, cols, num = self:cast(self.target.x, self.target.y)
+    local fx, fy, cols, num = utils.raycast(self.world.world, self, SightSeek.filter, self.target:getXCenter(), self.target:getYCenter(), self.target.x, self.target.y)
     if(num > 0)then
       self.target = nil
     elseif(self.waiting >= self.waitTime)then
@@ -59,9 +59,4 @@ function SightSeek:update(dt)
       self.waiting = self.waiting + dt
     end
   end
-end
-
-function SightSeek:cast(x,y)
-  self.world.world:update(self, self.entity:getXCenter(), self.entity:getYCenter())
-  return self.world.world:check(self, x, y, SightSeek.filter)
 end

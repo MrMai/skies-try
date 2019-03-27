@@ -51,3 +51,8 @@ function utils.createClass(...) -- a method to create multiple inheritance class
   c.__index = c
   return c
 end
+
+function utils.raycast(world, caster, filter, fromX, fromY, toX, toY) -- physics world
+  world:update(caster, fromX, fromY)
+  return world:check(caster, toX, toY, filter)
+end
