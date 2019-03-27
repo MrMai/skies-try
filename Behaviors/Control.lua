@@ -1,9 +1,11 @@
+require "ItemAttributes/Default"
 
 Control = {}
 Control.__index = Control
 
 function Control.new(entity, speed)
   local o = {}
+  o.type = "Control"
   o.isControl = true
   o.entity = entity
   o.speed = speed
@@ -29,7 +31,5 @@ function Control:update(dt)
     vx = vx / 1.414213562373095 -- square root of two
     vy = vy / 1.414213562373095
   end
-  local actualX, actualY, cols, len = self.entity.world.world:move(self.entity, self.entity.x + vx, self.entity.y + vy)
-  self.entity.x = actualX
-  self.entity.y = actualY
+  self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + vx, self.entity.y + vy, Default.filter)
 end

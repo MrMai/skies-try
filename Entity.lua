@@ -1,10 +1,24 @@
+local inspect = require "inspect"
+
 Entity = {}
 Entity.__index = Entity
 
-function Entity.new()
+function Entity.new(x,y)
   local o = {}
+  o.x, o.y = x, y
+  o.behaviorList = {}
+  o.behaviors = {}
   setmetatable(o, Entity)
   return o
+end
+
+function Entity:addBehavior(behavior)
+  self.behaviorList[behavior.type] = behavior
+  table.insert(self.behaviors, behavior)
+end
+
+function Entity:addDrawable(drawable)
+  table.insert(self.drawables, drawable)
 end
 
 function Entity:update(dt)

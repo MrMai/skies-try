@@ -5,6 +5,7 @@ HarvestOil.__index = HarvestOil
 
 function HarvestOil.new(world, entity, storage, allowed, detectRange, speed)
   local o = {}
+  o.type = "HarvestOil"
   o.isControl = false
   o.entity = entity
   o.storage = storage
@@ -21,7 +22,6 @@ function HarvestOil.new(world, entity, storage, allowed, detectRange, speed)
       table.insert(o.sources, world.entities[i])
     end
   end
-  print(#o.sources)
   setmetatable(o, HarvestOil)
   return o
 end
@@ -43,5 +43,4 @@ function HarvestOil:update(dt)
       end
     end
   end
-  print(self.storage.current)
 end

@@ -5,6 +5,7 @@ ContainsOil.__index = ContainsOil
 function ContainsOil.new(entity,max,current)
   current = current or max
   local o = {}
+  o.type = "ContainsOil"
   o.current = current
   o.max = max
   o.isControl = false

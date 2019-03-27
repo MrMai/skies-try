@@ -32,11 +32,14 @@ end
 
 function utils.scaledVec(x1,y1,x2,y2,dist)
   dist = dist or 1
-  local vx, vy = utils.pointVec(x1,y1,x2,y2)
-  local diag = utils.pytag(vx,vy)
-  return vx / diag * dist, vy / diag * dist
+  return utils.scaleVec(x2-x1,y2-y1,dist)
 end
 
+function utils.scaleVec(x,y,dist)
+  dist = dist or 1
+  local diag = utils.pythag(x,y)
+  return x / diag * dist, y / diag * dist
+end
 
 function utils.createClass(...) -- a method to create multiple inheritance classes
   local c = {}

@@ -4,6 +4,7 @@ require "Block"
 require "Entities/Player"
 require "Entities/OilResource"
 require "Entities/OilHarvester"
+require "Entities/GreenSlime"
 local bump = require "bump"
 
 Interface = {}
@@ -20,9 +21,10 @@ function Interface:add(element)
   table.insert(self.elements, element)
 end
 
-saveslocation = "/worlds/"
-
 function love.load()
+  love.window.setMode(800, 600, {highdpi = true})
+  gamescale = 12
+
   gameworld = World.new("world-1")
   -- gameworld:fill(100,100)
   -- gameworld:manifestBlocks()
@@ -33,8 +35,8 @@ function love.load()
   gameworld:addEntity(OilResource.new(gameworld,10,4,5,5))
   gameworld:addEntity(OilResource.new(gameworld,5,6,5,5))
   gameworld:addEntity(OilHarvester.new(gameworld,8,5,10,0))
+  gameworld:addEntity(GreenSlime.new(gameworld,20,4))
   selectedblock = 1
-  gamescale = 20
   offx, offy = 0,0
 end
 
