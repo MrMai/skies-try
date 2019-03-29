@@ -6,16 +6,15 @@ Entity.__index = Entity
 function Entity.new(x,y)
   local o = {}
   o.x, o.y = x, y
-  o.behaviorList = {}
   o.behaviors = {}
   o.currently = {}
+  o.drawables = {}
   setmetatable(o, Entity)
   return o
 end
 
 function Entity:addBehavior(behavior)
-  self.behaviorList[behavior.type] = behavior
-  table.insert(self.behaviors, behavior)
+  self.behaviors[behavior.type] = behavior
 end
 
 function Entity:addDrawable(drawable)
@@ -23,24 +22,42 @@ function Entity:addDrawable(drawable)
 end
 
 function Entity:update(dt)
-  for i=1,#self.behaviors do
-    if(not self.behaviors[i].isControl)then
-      self.behaviors[i]:update(dt)
+  for i,x in pairs(self.behaviors) do
+    if(not x.isControl)then
+      x:update(dt)
     end
   end
 end
 
 function Entity:controlUpdate(dt)
-  for i=1,#self.behaviors do
-    if(self.behaviors[i].isControl)then
-      self.behaviors[i]:update(dt)
+  for i,x in pairs(self.behaviors) do
+    if(x.isControl)then
+      x:update(dt)
     end
   end
 end
 
 function Entity:draw(x, y, scale)
   for i=1,#self.drawables do
-    self.drawables[i]:draw(x, y, scale)
+    if(not self.drawables[i].isLight() and not self.drawables[i].isUI())then
+      self.drawables[i]:draw(x, y, scale)
+    end
+  end
+end
+
+function Entity:drawLight(x, y, scale)
+  for i=1,#self.drawables do
+    if(self.drawables[i].isLight() and not self.drawables[i].isUI())then
+      self.drawables[i]:draw(x, y, scale)
+    end
+  end
+end
+
+function Entity:drawUI(x, y, scale)
+  for i=1,#self.drawables do
+    if(not self.drawables[i].isLight() and self.drawables[i].isUI())then
+      self.drawables[i]:draw(x, y, scale)
+    end
   end
 end
 

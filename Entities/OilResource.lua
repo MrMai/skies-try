@@ -14,10 +14,11 @@ function OilResource.new(world,x,y,max,current)
   o.type = "OilResource"
   o.world = world
 
+  -- Drawables
   local containsOil = ContainsOil.new(o, max, current)
   o:addBehavior(containsOil)
 
-  o.drawables = {}
+  -- Drawables
   local entityBox = EntityBox.new(o, Oil.color)
   o:addDrawable(entityBox)
 

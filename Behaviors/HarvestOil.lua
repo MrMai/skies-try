@@ -11,15 +11,15 @@ function HarvestOil.new(world, entity, storage, allowed, detectRange, speed)
   o.storage = storage
   o.sources = {}
   o.speed = speed
-  for i=1, #world.entities do
+  for ent in pairs(world.entities) do
     local isallowed = false
     for z=1, #allowed do
-      if world.entities[i].type == allowed[z] then
+      if ent.type == allowed[z] then
         isallowed = true
       end
     end
-    if(utils.distanceFrom(entity.x, entity.y, world.entities[i].x, world.entities[i].y) <= detectRange and world.entities[i].behaviorList["ContainsOil"] and isallowed)then
-      table.insert(o.sources, world.entities[i])
+    if(utils.distanceFrom(entity.x, entity.y, ent.x, ent.y) <= detectRange and ent.behaviors["ContainsOil"] and isallowed)then
+      table.insert(o.sources, ent)
     end
   end
   setmetatable(o, HarvestOil)
@@ -31,13 +31,13 @@ function HarvestOil:update(dt)
     local active = false
     for i=1, #self.sources do
       local amount = self.speed / #self.sources * dt
-      if(not self.sources[i].behaviorList["ContainsOil"]:isEmpty())then
+      if(not self.sources[i].behaviors["ContainsOil"]:isEmpty())then
         active = true
         local leftover = self.storage:fill(amount)
         if(leftover > 0)then
-          self.sources[i].behaviorList["ContainsOil"]:use(amount - leftover)
+          self.sources[i].behaviors["ContainsOil"]:use(amount - leftover)
         else
-          self.sources[i].behaviorList["ContainsOil"]:use(amount)
+          self.sources[i].behaviors["ContainsOil"]:use(amount)
         end
       else
         table.remove(self.sources, i)

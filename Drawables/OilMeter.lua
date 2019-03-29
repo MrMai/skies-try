@@ -13,6 +13,14 @@ function OilMeter.new(originEntity, behavior, offx, offy, width, height)
   return o
 end
 
+function OilMeter:isLight()
+  return false
+end
+
+function OilMeter:isUI()
+  return true
+end
+
 function OilMeter:draw(x, y, scale)
   love.graphics.setColor(Oil.color)
   love.graphics.rectangle("fill", x + ((self.offx + self.originEntity:getXCenter()) * scale), y + ((self.offy + self.originEntity:getYCenter() + (self.height - (self.height * self.behavior.current / self.behavior.max))) * scale), self.width * scale, self.height * self.behavior.current / self.behavior.max * scale)

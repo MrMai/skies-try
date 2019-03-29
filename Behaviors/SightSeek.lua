@@ -24,20 +24,20 @@ end
 
 function SightSeek:update(dt)
   local active = false
+
   if(self.target == nil)then
     local allowed = {}
-    for i=1, #self.entity.world.entities do
-      local ent = self.entity.world.entities[i]
+    for ent in pairs(self.entity.world.entities) do
       if(utils.distanceFrom(self.entity:getXCenter(), self.entity:getYCenter(), ent:getXCenter(), ent:getYCenter()) <= self.range) then
         for z=1, #self.allowed do
-          if(self.allowed[z] == self.entity.world.entities[i].type)then
-            table.insert(allowed, z)
+          if(self.allowed[z] == ent.type)then
+            table.insert(allowed, ent)
           end
         end
       end
     end
     if(#allowed > 0)then
-      self.target = self.entity.world.entities[allowed[math.random(1, #allowed)]]
+      self.target = allowed[math.random(1, #allowed)]
       self.waiting = 0
       local fx, fy, cols, num = utils.raycast(self.entity.world.world, self, Default.sightFilter, self.entity:getXCenter(), self.entity:getYCenter(), self.target.x, self.target.y)
       if(num > 0)then
@@ -50,6 +50,7 @@ function SightSeek:update(dt)
       self.target = nil
     elseif(self.waiting >= self.waitTime)then
       local vx, vy = utils.scaledVec(self.entity:getXCenter(), self.entity:getYCenter(), self.target:getXCenter(), self.target:getYCenter(), self.speed)
+      --vx, vy = utils.roundVec(vx,vy,8)
       self.entity.x, self.entity.y, self.collisions = self.entity.world.world:move(self.entity, self.entity.x + (vx * dt), self.entity.y + (vy * dt), Default.filter)
       active = true
     else

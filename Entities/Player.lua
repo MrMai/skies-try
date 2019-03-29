@@ -2,12 +2,21 @@ require "Entity"
 require "Behaviors/Control"
 require "Behaviors/Health"
 require "Drawables/EntityBox"
+require "Drawables/HealthMeter"
 
 Player = {}
 setmetatable(Player, Entity)
 Player.__index = Player
-Player.COLOR = {0.28515625, 0.52734375, 0.8515625}
+Player.color = {0.28515625, 0.52734375, 0.8515625}
 Player.speed = 8
+Player.projectileFilter = function(item, other)
+  if other.id ~= nil then
+    return 'touch'
+  elseif other.type == "GreenSlime" then
+    return "touch"
+  end
+  -- else return nil
+end
 
 function Player.new(world,x,y)
   o = Entity.new(x,y)
@@ -16,18 +25,17 @@ function Player.new(world,x,y)
   o.world = world
   world.world:add(o,x,y,o.width,o.height)
 
-  o.behaviorList = {}
-  o.behaviors = {}
-
+  -- Behaviors
   local control = Control.new(o, Player.speed)
   o:addBehavior(control)
-
   local health = Health.new(o, 5)
   o:addBehavior(health)
 
-  o.drawables = {}
-  local entityBox = EntityBox.new(o, Player.COLOR)
+  -- Drawables
+  local entityBox = EntityBox.new(o, Player.color)
   o:addDrawable(entityBox)
+  local healthMeter = HealthMeter.new(o, health, -0.8, -1.4, 1.6,0.4)
+  o:addDrawable(healthMeter)
 
   setmetatable(o, Player)
   return o

@@ -1,16 +1,16 @@
 Template = {}
 Template.__index = Template
 
-function Template.new(originEntity, behavior)
+function Template.new(originEntity, lampbehavior)
   local o = {}
   o.originEntity = originEntity
-  o.behavior = behavior
+  o.lampbehavior = lampbehavior
   setmetatable(o, Template)
   return o
 end
 
 function Template:isLight()
-  return false
+  return true
 end
 
 function Template:isUI()
@@ -18,5 +18,5 @@ function Template:isUI()
 end
 
 function Template:draw(x, y, scale)
-
+  love.graphics.circle("fill", x, y, self.lampbehavior.lightLevel * scale, 20)
 end

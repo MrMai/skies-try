@@ -9,6 +9,14 @@ function EntityBox.new(entity, color)
   return o
 end
 
+function EntityBox:isLight()
+  return false
+end
+
+function EntityBox:isUI()
+  return false
+end
+
 function EntityBox:draw(x, y, scale)
   love.graphics.setColor(self.color)
   love.graphics.rectangle("fill", x + (self.entity.x * scale), y + (self.entity.y * scale), self.entity.width * scale, self.entity.height * scale)

@@ -68,3 +68,20 @@ function utils.raycast(world, caster, filter, fromX, fromY, toX, toY) -- physics
   world:update(caster, fromX, fromY)
   return world:check(caster, toX, toY, filter)
 end
+
+function utils.dotProduct(x1,y1,x2,y2)
+	return (x1 * x2) + (y1 * y2)
+end
+
+function utils.vecAngle(x,y)
+	local ang = math.acos(math.abs(utils.dotProduct(x,y,1,0)) / utils.pythag(x,y))
+	if(y < math.pi)then
+		ang = math.pi * 2 - ang
+	end
+	return ang
+end
+
+function utils.roundVec(x,y, seg) -- doesnt work
+  local angle = math.floor(utils.vecAngle(x,y) / (2 * math.pi) * seg) / seg * 2 * math.pi
+  return utils.angleVec(angle, utils.pythag(x,y))
+end

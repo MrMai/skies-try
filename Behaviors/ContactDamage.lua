@@ -29,7 +29,7 @@ function ContactDamage:update(dt)
       end
     end
     if allowed and self.attackRe >= self.speed then
-      self.seekBehavior.collisions[i].other.behaviorList["Health"]:damage(self.damage)
+      self.seekBehavior.collisions[i].other.behaviors["Health"]:damage(self.damage)
       local vector = self.seekBehavior.collisions[i].move
       local vx, vy = utils.scaleVec(vector.x, vector.y, self.knockback)
       self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + vx, self.entity.y + vy)

@@ -12,11 +12,19 @@ function HarvestOilLines.new(originEntity, containsOilBehavior, harvestOilBehavi
   return o
 end
 
+function HarvestOilLines:isLight()
+  return false
+end
+
+function HarvestOilLines:isUI()
+  return false
+end
+
 function HarvestOilLines:draw(x, y, scale)
   love.graphics.setColor(Oil.harvestColor)
-  for i=1, #self.harvestOilBehavior.sources do
-    if(not self.harvestOilBehavior.sources[i].behaviorList["ContainsOil"]:isEmpty())then
-      love.graphics.line(x + (self.originEntity:getXCenter() * scale), y + (self.originEntity:getYCenter() * scale), x + (self.harvestOilBehavior.sources[i]:getXCenter() * scale), y + (self.harvestOilBehavior.sources[i]:getYCenter() * scale))
+  for o, sour in pairs(self.harvestOilBehavior.sources) do
+    if(not sour.behaviors["ContainsOil"]:isEmpty())then
+      love.graphics.line(x + (self.originEntity:getXCenter() * scale), y + (self.originEntity:getYCenter() * scale), x + (sour:getXCenter() * scale), y + (sour:getYCenter() * scale))
     end
   end
 end
