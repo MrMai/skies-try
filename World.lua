@@ -71,14 +71,21 @@ function World:update(dt)
 end
 
 function World:draw(x, y, scale)
-  for i in pairs(self.entities) do
-    i:draw(x,y,scale)
-  end
   local blockDraw = function()
     self:drawBoxes(x, y, scale)
   end
-  self:drawBoxes(x, y, scale)
+  --[[
+  local lightMask = function()
+    self.lightWorld:drawLights(blockDraw, 0, 0)
+  end
+  love.graphics.stencil(lightMask, "replace", 1)
+  love.graphics.setStencilTest("greater", 0)
+]]--
   self.lightWorld:drawLights(blockDraw, 0, 0)
+  self:drawBoxes(x, y, scale)
+  for i in pairs(self.entities) do
+    i:draw(x,y,scale)
+  end
   for i in pairs(self.entities) do
     i:drawUI(x,y,scale)
   end

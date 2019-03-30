@@ -57,17 +57,17 @@ function love.draw()
   offx = centerX - (player.x * gamescale) - (player.width  * gamescale / 2)
   offy = centerY - (player.y * gamescale) - (player.height * gamescale / 2)
   --[[
+  local blockDraw = function()
+    gameworld:drawBoxes(offx, offy, gamescale)
+  end
   stencilfunction = function()
-    love.graphics.circle("fill", centerX, centerY, 200, 30)
+    gameworld.lightWorld:drawLights(blockDraw, 0, 0)
     --gameworld:drawSightPolygon(offx, offy, gamescale, player.x,player.y,20)
   end
   love.graphics.stencil(stencilfunction)
   love.graphics.setStencilTest("greater", 0)
-  love.graphics.setColor(0.2,0.2,0.2)
-  love.graphics.rectangle("fill", 0, 0, centerX * 2, centerY * 2)
   ]]--
   gameworld:draw(offx,offy,gamescale)
-  love.graphics.setColor(1, 1, 1, 0.5)
   love.graphics.setStencilTest()
 end
 
