@@ -8,7 +8,7 @@ setmetatable(GreenSlime, Entity)
 GreenSlime.__index = GreenSlime
 GreenSlime.allowed = {"Player"}
 GreenSlime.health = 2
-GreenSlime.range = 14
+GreenSlime.range = 25
 GreenSlime.speed = 5
 GreenSlime.decisiveness = 2.5
 GreenSlime.wanderSpeed = 2

@@ -12,7 +12,7 @@ Interface = {}
 Interface.__index = World
 
 function love.load()
-  love.window.setMode(800, 600, {highdpi = true})
+  love.window.setMode(1400, 900, {highdpi = true})
   love.graphics.setFont(love.graphics.newImageFont("Assets/ImageFont.png",
     " abcdefghijklmnopqrstuvwxyz" ..
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
@@ -22,6 +22,8 @@ function love.load()
   gameworld = World.new("world-1")
   -- gameworld:fill(100,100)
   -- gameworld:manifestBlocks()
+  local centerX, centerY = love.window.getMode()
+  gameworld.lightWorld:addLight(centerX/2, centerY/2, 1000, 0.2, 0.2, 0.2)
   gameworld:load()
   gameworld:checkCorners(10,10,10)
   player = Player.new(gameworld,1,1)
@@ -54,15 +56,16 @@ function love.draw()
   centerX, centerY = centerX/2, centerY/2
   offx = centerX - (player.x * gamescale) - (player.width  * gamescale / 2)
   offy = centerY - (player.y * gamescale) - (player.height * gamescale / 2)
-
+  --[[
   stencilfunction = function()
     love.graphics.circle("fill", centerX, centerY, 200, 30)
+    --gameworld:drawSightPolygon(offx, offy, gamescale, player.x,player.y,20)
   end
   love.graphics.stencil(stencilfunction)
   love.graphics.setStencilTest("greater", 0)
   love.graphics.setColor(0.2,0.2,0.2)
   love.graphics.rectangle("fill", 0, 0, centerX * 2, centerY * 2)
-
+  ]]--
   gameworld:draw(offx,offy,gamescale)
   love.graphics.setColor(1, 1, 1, 0.5)
   love.graphics.setStencilTest()

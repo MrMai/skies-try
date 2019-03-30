@@ -1,5 +1,6 @@
 require "Block"
 require "utils"
+require "lights"
 require "ItemAttributes/Default"
 local bump = require "bump"
 
@@ -11,6 +12,7 @@ function World.new(name)
   o.name = name
   o.entities = {}
   o.world = bump.newWorld(4)
+  o.lightWorld = Lights.new()
   o.caster = {}
   o.world:add(o.caster, 0,0,0.0001,0.0001)
   o.colorP = {
@@ -69,10 +71,14 @@ function World:update(dt)
 end
 
 function World:draw(x, y, scale)
-  self:drawBoxes(x, y, scale)
   for i in pairs(self.entities) do
     i:draw(x,y,scale)
   end
+  local blockDraw = function()
+    self:drawBoxes(x, y, scale)
+  end
+  self:drawBoxes(x, y, scale)
+  self.lightWorld:drawLights(blockDraw, 0, 0)
   for i in pairs(self.entities) do
     i:drawUI(x,y,scale)
   end
@@ -168,13 +174,11 @@ function World:drawSightPolygon(drawX, drawY, scale, x,y,range)
     table.insert(allCorners, corners[i])
     table.insert(allCorners, corners[i+1]+1)
   end
-  --[[
   for i=1, 20 do -- adding vision rays
     local vecX, vecY = utils.angleVec(1/20 * (i-1) * 2 * math.pi, range)
     table.insert(allCorners, vecX + x)
     table.insert(allCorners, vecY + y)
   end
-  ]]--
 --  table.sort(sortedCorners, function(a,b) return a[2] > b[2] end)
   self.world:update(self.caster, x, y)
   for i=1,#allCorners,2 do

@@ -20,7 +20,7 @@ function Arrow.new(world,x,y,vx,vy,filter)
   o.world.world:add(o,x,y,Arrow.width,Arrow.height)
   -- Behaviors
   vx, vy = utils.scaleVec(vx,vy,Arrow.speed)
-  local disintegration = Disintegration.new(o, Arrow.lifetime)
+  local disintegration = Disintegration.new(o, Arrow.lifetime, {"IsFlyingProjectile"})
   o:addBehavior(disintegration)
   local hitProjectile = HitProjectile.new(o, Arrow.damage, vx, vy, filter)
   o:addBehavior(hitProjectile)

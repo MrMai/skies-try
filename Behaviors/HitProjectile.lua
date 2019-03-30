@@ -8,8 +8,8 @@ function HitProjectile.new(entity, damage, vx, vy, filter)
   o.entity = entity
   o.filter = filter
   o.damage = damage
-  print(vx,vy)
   o.vx, o.vy = vx,vy
+  entity.currently["IsFlyingProjectile"] = true
   setmetatable(o, HitProjectile)
   return o
 end
@@ -23,7 +23,6 @@ function HitProjectile:update(dt)
         cols[i].other.behaviors["Health"]:damage(self.damage)
       end
     end
-    print("arrow dead")
     self.entity:kill()
   end
 end
