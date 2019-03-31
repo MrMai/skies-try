@@ -28,3 +28,7 @@ function HarvestOilLines:draw(x, y, scale)
     end
   end
 end
+
+function HarvestOilLines:update(dt)
+
+end

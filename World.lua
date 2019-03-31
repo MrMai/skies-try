@@ -15,7 +15,7 @@ function World.new(name)
   o.entities = {}
   o.world = bump.newWorld(4)
   o.lightWorld = Lights.new()
-  o.spritesheet = Spritesheet.new(spritesheetLoc, 8,8)
+  o.spritesheet = Spritesheet.newFromSheet(spritesheetLoc, 8,8)
   o.caster = {}
   o.world:add(o.caster, 0,0,0.0001,0.0001)
   o.colorP = {

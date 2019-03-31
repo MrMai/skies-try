@@ -27,3 +27,7 @@ function HealthMeter:draw(x, y, scale)
   love.graphics.setColor(1, 1, 1)
   love.graphics.rectangle("line", x + ((self.offx + self.originEntity:getXCenter()) * scale), y + ((self.offy + self.originEntity:getYCenter()) * scale), self.width * scale, self.height * scale)
 end
+
+function HealthMeter:update(dt)
+  
+end

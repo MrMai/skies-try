@@ -1,7 +1,7 @@
 Spritesheet = {}
 Spritesheet.__index = Spritesheet
 
-function Spritesheet.new(file, width, height)
+function Spritesheet.newFromSheet(file, width, height)
   o = {}
   o.image = image
   o.quads = {}

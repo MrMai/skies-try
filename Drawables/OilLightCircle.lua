@@ -20,3 +20,7 @@ end
 function Template:draw(x, y, scale)
   love.graphics.circle("fill", x, y, self.lampbehavior.lightLevel * scale, 20)
 end
+
+function Template:update(dt)
+
+end

@@ -20,3 +20,7 @@ end
 function Template:draw(x, y, scale)
 
 end
+
+function Template:update(dt)
+
+end
