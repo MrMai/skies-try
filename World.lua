@@ -77,10 +77,11 @@ function World:draw(x, y, scale)
   --[[
   local lightMask = function()
     self.lightWorld:drawLights(blockDraw, 0, 0)
+    love.graphics.circle("fill", 500, 500, 300, 20)
   end
   love.graphics.stencil(lightMask, "replace", 1)
   love.graphics.setStencilTest("greater", 0)
-]]--
+  ]]--
   self.lightWorld:drawLights(blockDraw, 0, 0)
   self:drawBoxes(x, y, scale)
   for i in pairs(self.entities) do
@@ -89,6 +90,7 @@ function World:draw(x, y, scale)
   for i in pairs(self.entities) do
     i:drawUI(x,y,scale)
   end
+
 end
 
 function World:drawLightMask(x, y, scale)

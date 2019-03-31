@@ -17,8 +17,8 @@ end
 function Disintegration:update(dt)
   self.time = self.time + dt
   local should = false
-  for i in pairs(self.whileDoing) do
-    if self.entity.currently[i] then
+  for i,x in pairs(self.whileDoing) do
+    if self.entity.currently[x] then
       should = true
     end
   end
