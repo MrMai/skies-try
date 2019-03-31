@@ -86,7 +86,7 @@ function World:draw(x, y, scale)
   love.graphics.setStencilTest("greater", 0)
   ]]--
   self.lightWorld:drawLights(blockDraw, 0, 0)
-  self:drawBoxes(x, y, scale)
+  --self:drawBoxes(x, y, scale)
   self:drawSprites(x,y,scale)
   for i in pairs(self.entities) do
     i:draw(x,y,scale)
@@ -94,7 +94,6 @@ function World:draw(x, y, scale)
   for i in pairs(self.entities) do
     i:drawUI(x,y,scale)
   end
-
 end
 
 function World:drawLightMask(x, y, scale)
@@ -265,8 +264,9 @@ function World:fill(width, height)
 end
 
 function World:drawSprites(x,y,scale)
-  for kx=0,#self do
-    for ky=0,#self[1] do
+  scale = scale / self.spritesheet.width
+  for kx=0,#self-1 do
+    for ky=0,#self[1]-1 do
       if(self:get(kx,ky).id ~= 0)then
         self.spritesheet:draw(self:get(kx,ky).id,x + (self.spritesheet.width * scale * kx), y + (self.spritesheet.height * scale * ky), scale)
     	end
