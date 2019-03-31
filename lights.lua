@@ -25,12 +25,13 @@ function Lights:addLight(lx, ly, lsize, lr, lg, lb)
 	for _, li in ipairs(self.lightInfos) do
 		if li.x == lx and li.y == ly then return end
 	end
-
-	table.insert(self.lightInfos, {x=lx, y=ly, size=lsize, r=lr, g=lg, b=lb,
+	local light = {x=lx, y=ly, size=lsize, r=lr, g=lg, b=lb,
 		occludersCanvas = love.graphics.newCanvas(lsize, lsize),
 		shadowMapCanvas = love.graphics.newCanvas(lsize, 1),
 		lightRenderCanvas = love.graphics.newCanvas(lsize, lsize),
-	})
+	}
+	table.insert(self.lightInfos, light)
+	return light
 end
 
 -- Clear all lights.

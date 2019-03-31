@@ -1,16 +1,20 @@
 Spritesheet = {}
+Spritesheet.__index = Spritesheet
 
-function Spritesheet:new(file, width, height)
-  image = love.graphics.newImage(file)
+function Spritesheet.new(file, width, height)
+  o = {}
+  o.image = image
+  o.quads = {}
+  o.width = width
+  o.height = height
+  local image = love.graphics.newImage("/Assets/tilesets/topdown.png")
   image:setFilter("nearest")
-  o = {image = image, quads = {}, width = width, height = height}
-  for y = 0, image:getHeight() - height, height do
-    for x = 0, image:getWidth() - width, width do
+  for y = 0, image:getHeight() - width, height do
+    for x = 0, image:getWidth() - width, height do
       table.insert(o.quads, love.graphics.newQuad(x, y, width, height, image:getDimensions()))
     end
   end
-  setmetatable(o, self)
-  self.__index = self
+  setmetatable(o, Spritesheet)
   return o
 end
 

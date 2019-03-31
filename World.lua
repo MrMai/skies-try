@@ -2,10 +2,12 @@ require "Block"
 require "utils"
 require "lights"
 require "ItemAttributes/Default"
+require "Spritesheet"
 local bump = require "bump"
 
 World = {}
 World.__index = World
+local spritesheetLoc = "/Assets/tilesets/topdown.png"
 
 function World.new(name)
   local o = {}
@@ -13,6 +15,7 @@ function World.new(name)
   o.entities = {}
   o.world = bump.newWorld(4)
   o.lightWorld = Lights.new()
+  o.spritesheet = Spritesheet.new(spritesheetLoc, 8,8)
   o.caster = {}
   o.world:add(o.caster, 0,0,0.0001,0.0001)
   o.colorP = {
@@ -84,6 +87,7 @@ function World:draw(x, y, scale)
   ]]--
   self.lightWorld:drawLights(blockDraw, 0, 0)
   self:drawBoxes(x, y, scale)
+  self:drawSprites(x,y,scale)
   for i in pairs(self.entities) do
     i:draw(x,y,scale)
   end
@@ -263,8 +267,8 @@ end
 function World:drawSprites(x,y,scale)
   for kx=0,#self do
     for ky=0,#self[1] do
-      if(self[kx+1][ky+1] ~= 0)then
-        self.spritesheet.draw(self[kx+1][ky+1],x + (self.spritesheet.width * scale * kx), y + (self.spritesheet.height * scale * ky), scale)
+      if(self:get(kx,ky).id ~= 0)then
+        self.spritesheet:draw(self:get(kx,ky).id,x + (self.spritesheet.width * scale * kx), y + (self.spritesheet.height * scale * ky), scale)
     	end
     end
   end
