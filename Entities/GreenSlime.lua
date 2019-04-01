@@ -46,6 +46,7 @@ function GreenSlime.new(world,x,y)
   local healthMeter = HealthMeter.new(o, health, -0.35, -1, 0.7,0.4)
   o:addDrawable(healthMeter)
   local animateWhileWalking = AnimateWhile.new(o, GreenSlime.movingAnimation, {0.3, 0.3}, {"Wandering","Seeking"})
+  o:addDrawable(animateWhileWalking)
   setmetatable(o, GreenSlime)
   return o
 end

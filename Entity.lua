@@ -27,6 +27,11 @@ function Entity:update(dt)
       x:update(dt)
     end
   end
+  for i,x in pairs(self.drawables) do
+    if(x.update ~= nil)then
+      x:update(dt)
+    end
+  end
 end
 
 function Entity:controlUpdate(dt)
