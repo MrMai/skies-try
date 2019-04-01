@@ -17,7 +17,7 @@ function love.load()
     " abcdefghijklmnopqrstuvwxyz" ..
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
     "123456789.,!?-+/():;%&`'*#=[]\""))
-  gamescale = 12
+  gamescale = 20
 
   gameworld = World.new("world-1")
   -- gameworld:fill(100,100)

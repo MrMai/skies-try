@@ -7,7 +7,7 @@ local bump = require "bump"
 
 World = {}
 World.__index = World
-local spritesheetLoc = "/Assets/tilesets/topdown.png"
+local spritesheetLoc = "/Assets/tilesets/randomtopdown.png"
 
 function World.new(name)
   local o = {}
@@ -15,7 +15,7 @@ function World.new(name)
   o.entities = {}
   o.world = bump.newWorld(4)
   o.lightWorld = Lights.new()
-  o.spritesheet = Spritesheet.newFromSheet(spritesheetLoc, 8,8)
+  o.spritesheet = Spritesheet.newFromSheet(spritesheetLoc, 16,16)
   o.caster = {}
   o.world:add(o.caster, 0,0,0.0001,0.0001)
   o.colorP = {
@@ -264,11 +264,11 @@ function World:fill(width, height)
 end
 
 function World:drawSprites(x,y,scale)
-  scale = scale / self.spritesheet.width
+  love.graphics.setShader()
   for kx=0,#self-1 do
     for ky=0,#self[1]-1 do
       if(self:get(kx,ky).id ~= 0)then
-        self.spritesheet:draw(self:get(kx,ky).id,x + (self.spritesheet.width * scale * kx), y + (self.spritesheet.height * scale * ky), scale)
+        self.spritesheet:draw(self:get(kx,ky).id,x + (scale * kx), y + (scale * ky), scale)
     	end
     end
   end

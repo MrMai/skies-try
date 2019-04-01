@@ -6,7 +6,7 @@ function Spritesheet.newFromSheet(file, width, height)
   o.quads = {}
   o.width = width
   o.height = height
-  o.image = love.graphics.newImage("/Assets/tilesets/topdown.png")
+  o.image = love.graphics.newImage(file)
   o.image:setFilter("nearest")
   for y = 0, o.image:getHeight() - width, height do
     for x = 0, o.image:getWidth() - width, height do
@@ -19,5 +19,8 @@ end
 
 function Spritesheet:draw(index, x, y, scale, rotation)
   rotation = rotation or 0
-  love.graphics.draw(self.image, self.quads[index], x, y, rotation, scale, scale)
+  wscale = scale / self.width
+  hscale = scale / self.height
+  love.graphics.setShader()
+  love.graphics.draw(self.image, self.quads[index], x, y, rotation, wscale, hscale)
 end
