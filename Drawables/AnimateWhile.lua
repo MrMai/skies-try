@@ -1,11 +1,11 @@
+require "utils"
 AnimateWhile = {}
 AnimateWhile.__index = AnimateWhile
 
-function AnimateWhile.new(originEntity, seekbehavior, spritesheet, timing, whileDoing)
+function AnimateWhile.new(originEntity, spritesheet, timing, whileDoing)
   local o = {}
   o.originEntity = originEntity
   o.spritesheet = spritesheet
-  o.seekbehavior = seekbehavior
   -- the given time is the amount of time spent on a given frame, but the timing is the end time of that frame
   -- ex 0.2, 0.2, 0.2 would be 0.2, 0.4, 0.6
   o.timing = {}
@@ -38,7 +38,7 @@ function AnimateWhile:draw(x, y, scale)
       first = self.timing[i-1]
     end
     if first <= self.current and self.timing[i] >= self.current then
-      self.spritesheet:draw(i, x + (scale * self.originEntity.x), y + (scale * self.originEntity.y), scale)
+      self.spritesheet:draw(i, x + (scale * self.originEntity.x), y + (scale * self.originEntity.y), scale, 1, 1, 1)
       return
     end
   end
