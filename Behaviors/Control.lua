@@ -1,4 +1,5 @@
 require "ItemAttributes/Default"
+require "utils"
 
 Control = {}
 Control.__index = Control
@@ -22,7 +23,7 @@ function Control:update(dt)
   local refSpeed = self.speed
   if(love.keyboard.isDown("d", "right") or love.keyboard.isDown("a", "left")) and (love.keyboard.isDown("w", "up") or love.keyboard.isDown("s", "down"))then
     nonsingle = 1.414213562373095
-    refSpeed = self.speed * 1.414213562373095
+    refSpeed = self.speed / 1.414213562373095
   end
   if love.keyboard.isDown("d", "right") and self.vx < refSpeed then
     movedX = true
@@ -79,6 +80,5 @@ function Control:update(dt)
   if(self.vx or self.vy)then
     self.entity.currently["Controlling"] = true
   end
-  local cols,num = nil,nil
-  self.entity.x, self.entity.y,cols,num = self.entity.world.world:move(self.entity, self.entity.x + (self.vx * dt), self.entity.y + (self.vy * dt), Default.filter)
+  self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + (self.vx * dt), self.entity.y + (self.vy * dt), Default.filter)
 end
