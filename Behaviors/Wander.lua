@@ -71,6 +71,7 @@ function Wander:update(dt)
       self.waitUntil = math.random() * self.decisiveness
       self.wanderVec.x, self.wanderVec.y = self.rays[select][1] / self.range, self.rays[select][2] / self.range
     elseif self.entity.currently["Wandering"] and not self.entity.currently["WaitingBefore"] then
+      self.entity.facing = utils.angleVec(self.wanderVec.x, self.wanderVec.y)
       self.entity.x, self.entity.y, cols, num = self.entity.world.world:move(self.entity, self.entity.x + (self.wanderVec.x * self.speed * dt), self.entity.y + (self.wanderVec.y * self.speed * dt), Default.filter)
       self.waitTimer = self.waitTimer + dt
       if(num > 0 or self.waitTimer >= self.waitUntil)then
