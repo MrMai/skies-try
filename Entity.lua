@@ -3,9 +3,10 @@ local inspect = require "inspect"
 Entity = {}
 Entity.__index = Entity
 
-function Entity.new(x,y)
+function Entity.new(x,y, facing)
   local o = {}
   o.x, o.y = x, y
+  o.facing = facing or 0
   o.behaviors = {}
   o.currently = {}
   o.drawables = {}
