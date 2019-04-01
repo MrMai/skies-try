@@ -9,7 +9,7 @@ setmetatable(Player, Entity)
 Player.__index = Player
 Player.color = {0.28515625, 0.52734375, 0.8515625}
 Player.speed = 8
-Player.acceleration = 34
+Player.acceleration = 8
 Player.projectileFilter = function(item, other)
   if other.id ~= nil then
     return 'touch'

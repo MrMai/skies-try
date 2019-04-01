@@ -25,23 +25,28 @@ function Control:update(dt)
     nonsingle = 1.414213562373095
     refSpeed = self.speed / 1.414213562373095
   end
-  if love.keyboard.isDown("d", "right") and self.vx < refSpeed then
+  print("moving")
+  if love.keyboard.isDown("d", "right") and self.vx <= refSpeed then
     movedX = true
     self.vx = self.vx + (self.acceleration * dt / nonsingle)
+    print("moving right", self.vx)
   end
-  if love.keyboard.isDown("a", "left") and self.vx < refSpeed then
+  if love.keyboard.isDown("a", "left") and self.vx <= refSpeed then
     movedX = true
     self.vx = self.vx - (self.acceleration * dt / nonsingle)
+    print("moving left", self.vx)
   end
-  if love.keyboard.isDown("w", "up") and self.vy < refSpeed then
+  if love.keyboard.isDown("w", "up") and self.vy <= refSpeed then
     movedY = true
     self.vy = self.vy - (self.acceleration * dt / nonsingle)
+    print("moving up", self.vy)
   end
-  if love.keyboard.isDown("s", "down") and self.vy < refSpeed then
+  if love.keyboard.isDown("s", "down") and self.vy <= refSpeed then
     movedY = true
     self.vy = self.vy + (self.acceleration * dt / nonsingle)
+    print("moving down", self.vy)
   end
-  if(not movedX)then
+  if movedX == false then
     if(self.vx > 0)then
       self.vx = self.vx - (self.acceleration * dt)
       if(self.vx < 0)then
