@@ -2,11 +2,14 @@ require "Entity"
 require "Behaviors/SightSeek"
 require "Behaviors/ContactDamage"
 require "Behaviors/Wander"
+require "Drawables/AnimateWhile"
+require "Spritesheet"
 
 GreenSlime = {}
 setmetatable(GreenSlime, Entity)
 GreenSlime.__index = GreenSlime
 GreenSlime.allowed = {"Player"}
+GreenSlime.movingAnimation = Spritesheet.newFromSheet("Assets/greenBlobMoving.png",16,16)
 GreenSlime.health = 2
 GreenSlime.range = 25
 GreenSlime.speed = 7
@@ -38,11 +41,11 @@ function GreenSlime.new(world,x,y)
   local wander = Wander.new(o, 8, GreenSlime.wanderRange, GreenSlime.wanderSpeed, GreenSlime.decisiveness, GreenSlime.wallClosest, GreenSlime.lazyness, GreenSlime.rooting)
   o:addBehavior(wander)
   -- Drawables
-  local entityBox = EntityBox.new(o, GreenSlime.color)
-  o:addDrawable(entityBox)
+  --local entityBox = EntityBox.new(o, GreenSlime.color)
+  --o:addDrawable(entityBox)
   local healthMeter = HealthMeter.new(o, health, -0.35, -1, 0.7,0.4)
   o:addDrawable(healthMeter)
-
+  local animateWhileWalking = AnimateWhile.new(o, GreenSlime.movingAnimation, {0.3, 0.3}, {"Wandering","Seeking"})
   setmetatable(o, GreenSlime)
   return o
 end

@@ -10,14 +10,14 @@ OilHarvester = {}
 setmetatable(OilHarvester, Entity)
 OilHarvester.__index = OilHarvester
 OilHarvester.allowed = {"OilResource"}
-OilHarvester.spritesheet = Spritesheet.newFromSheet("Assets/crystalharvester.png",16,16)
+OilHarvester.width, OilHarvester.height = 2,2
+OilHarvester.spritesheet = Spritesheet.newFromSheet("Assets/crystalharvester.png",32,32)
 
 function OilHarvester.new(world,x,y,max,current)
   o = Entity.new(x,y)
   o.type = "OilHarvester"
-  o.width, o.height = 1,1
   o.world = world
-  world.world:add(o, x,y,o.width,o.height)
+  world.world:add(o, x,y,OilHarvester.width,OilHarvester.height)
   -- Behaviors
   local containsOil = ContainsOil.new(o, max, current)
   o:addBehavior(containsOil)
@@ -32,7 +32,7 @@ function OilHarvester.new(world,x,y,max,current)
   local sprite = Sprite.new(o, OilHarvester.spritesheet, 1)
   o:addDrawable(sprite)
 
-  local oilMeter = OilMeter.new(o, containsOil, -1.1, -0.6, 0.4,1.2)
+  local oilMeter = OilMeter.new(o, containsOil, -1.6, -0.6, 0.4,1.2)
   o:addDrawable(oilMeter)
 
   setmetatable(o, OilHarvester)

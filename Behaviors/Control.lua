@@ -12,78 +12,51 @@ function Control.new(entity, speed,acceleration)
   o.maxspeed = speed
   o.speed = speed
   o.acceleration = acceleration or speed
-  o.vx, o.vy = 0,0
+  o.currentSpeed = 0
   setmetatable(o, Control)
   return o
 end
 
 function Control:update(dt)
-  local movedX, movedY = false, false
-  local nonsingle = 1
-  local refSpeed = self.speed
-  if(love.keyboard.isDown("d", "right") or love.keyboard.isDown("a", "left")) and (love.keyboard.isDown("w", "up") or love.keyboard.isDown("s", "down"))then
-    nonsingle = 1.414213562373095
-    refSpeed = self.speed / 1.414213562373095
+  local vx, vy = 0,0
+  local modifier = 1
+  if (love.keyboard.isDown("d", "right") or love.keyboard.isDown("a", "left")) and (love.keyboard.isDown("w", "up") or love.keyboard.isDown("s", "down")) then
+    modifier = 1.73205080757
   end
-  print("moving")
-  if love.keyboard.isDown("d", "right") and self.vx <= refSpeed then
-    movedX = true
-    self.vx = self.vx + (self.acceleration * dt / nonsingle)
-    print("moving right", self.vx)
-  end
-  if love.keyboard.isDown("a", "left") and self.vx <= refSpeed then
-    movedX = true
-    self.vx = self.vx - (self.acceleration * dt / nonsingle)
-    print("moving left", self.vx)
-  end
-  if love.keyboard.isDown("w", "up") and self.vy <= refSpeed then
-    movedY = true
-    self.vy = self.vy - (self.acceleration * dt / nonsingle)
-    print("moving up", self.vy)
-  end
-  if love.keyboard.isDown("s", "down") and self.vy <= refSpeed then
-    movedY = true
-    self.vy = self.vy + (self.acceleration * dt / nonsingle)
-    print("moving down", self.vy)
-  end
-  if movedX == false then
-    if(self.vx > 0)then
-      self.vx = self.vx - (self.acceleration * dt)
-      if(self.vx < 0)then
-        self.vx = 0
+  if love.keyboard.isDown("d", "right") or love.keyboard.isDown("a", "left") or love.keyboard.isDown("w", "up") or love.keyboard.isDown("s", "down") then
+    if(self.currentSpeed <= self.speed / modifier)then
+      self.currentSpeed = self.currentSpeed + (dt * self.acceleration / modifier)
+      if(self.currentSpeed > self.speed / modifier)then
+        self.currentSpeed = self.speed / modifier
       end
-    elseif(self.vx ~= 0)then
-      self.vx = self.vx + (self.acceleration * dt)
-      if(self.vx > 0)then
-        self.vx = 0
+    end
+  else
+    if(self.currentSpeed > 0)then
+      self.currentSpeed = self.currentSpeed - (dt * self.acceleration / modifier)
+      if(self.currentSpeed < 0)then
+        self.currentSpeed = 0
       end
     end
   end
-  if(not movedY)then
-    if(self.vy > 0)then
-      self.vy = self.vy - (self.acceleration * dt)
-      if(self.vy < 0)then
-        self.vy = 0
-      end
-    elseif(self.vy ~= 0)then
-      self.vy = self.vy + (self.acceleration * dt)
-      if(self.vy > 0)then
-        self.vy = 0
-      end
-    end
+  if(self.currentSpeed > self.speed / modifier)then
+    self.currentSpeed = self.speed / modifier
   end
-  if(self.vx > refSpeed)then
-    self.vx = self.speed
-  elseif(self.vx < -refSpeed)then
-    self.vx = -self.speed
+  if love.keyboard.isDown("d", "right") then
+    vx = vx + 1
   end
-  if(self.vy > refSpeed)then
-    self.vy = self.speed
-  elseif(self.vy < -refSpeed)then
-    self.vy = -self.speed
+  if love.keyboard.isDown("a", "left") then
+    vx = vx - 1
   end
+  if love.keyboard.isDown("s", "down") then
+    vy = vy + 1
+  end
+  if love.keyboard.isDown("w", "up") then
+    vy = vy - 1
+  end
+  vx = vx * self.currentSpeed
+  vy = vy * self.currentSpeed
   if(self.vx or self.vy)then
     self.entity.currently["Controlling"] = true
   end
-  self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + (self.vx * dt), self.entity.y + (self.vy * dt), Default.filter)
+  self.entity.x, self.entity.y = self.entity.world.world:move(self.entity, self.entity.x + (vx * dt), self.entity.y + (vy * dt), Default.filter)
 end

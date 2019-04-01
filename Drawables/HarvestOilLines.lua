@@ -2,6 +2,7 @@ require "ItemAttributes/Oil"
 
 HarvestOilLines = {}
 HarvestOilLines.__index = HarvestOilLines
+HarvestOilLines.lineSize = 0.2
 
 function HarvestOilLines.new(originEntity, containsOilBehavior, harvestOilBehavior)
   local o = {}
@@ -22,11 +23,13 @@ end
 
 function HarvestOilLines:draw(x, y, scale)
   love.graphics.setColor(Oil.harvestColor)
+  love.graphics.setLineWidth(HarvestOilLines.lineSize * scale)
   for o, sour in pairs(self.harvestOilBehavior.sources) do
     if(not sour.behaviors["ContainsOil"]:isEmpty())then
       love.graphics.line(x + (self.originEntity:getXCenter() * scale), y + (self.originEntity:getYCenter() * scale), x + (sour:getXRoot() * scale), y + (sour:getYRoot() * scale))
     end
   end
+  love.graphics.setLineWidth(1)
 end
 
 function HarvestOilLines:update(dt)

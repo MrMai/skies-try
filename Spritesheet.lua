@@ -19,8 +19,8 @@ end
 
 function Spritesheet:draw(index, x, y, scale, r,g,b,rotation)
   rotation = rotation or 0
-  wscale = scale / self.width
-  hscale = scale / self.height
+  wscale = scale / 16
+  hscale = scale / 16
   love.graphics.setColor(r or 1,g or 1,b or 1)
   love.graphics.draw(self.image, self.quads[index], x, y, rotation, wscale, hscale)
 end
