@@ -21,6 +21,5 @@ function Spritesheet:draw(index, x, y, scale, rotation)
   rotation = rotation or 0
   wscale = scale / self.width
   hscale = scale / self.height
-  love.graphics.setShader()
   love.graphics.draw(self.image, self.quads[index], x, y, rotation, wscale, hscale)
 end

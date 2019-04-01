@@ -5,7 +5,7 @@ function RandomStationarySprite.new(originEntity, spritesheet)
   local o = {}
   o.originEntity = originEntity
   o.spritesheet = spritesheet
-  o.index = math.random(1, #spritesheet.quads)
+  o.index = math.random(0, #spritesheet.quads)
   setmetatable(o, RandomStationarySprite)
   return o
 end
