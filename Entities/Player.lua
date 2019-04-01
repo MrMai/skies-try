@@ -9,6 +9,7 @@ setmetatable(Player, Entity)
 Player.__index = Player
 Player.color = {0.28515625, 0.52734375, 0.8515625}
 Player.speed = 8
+Player.acceleration = 34
 Player.projectileFilter = function(item, other)
   if other.id ~= nil then
     return 'touch'
@@ -26,7 +27,7 @@ function Player.new(world,x,y)
   world.world:add(o,x,y,o.width,o.height)
 
   -- Behaviors
-  local control = Control.new(o, Player.speed)
+  local control = Control.new(o, Player.speed, Player.acceleration)
   o:addBehavior(control)
   local health = Health.new(o, 5)
   o:addBehavior(health)

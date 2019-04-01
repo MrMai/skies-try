@@ -37,6 +37,10 @@ function love.load()
   offx, offy = 0,0
 end
 
+function love.wheelmoved(x,y)
+  gamescale = gamescale + y
+end
+
 function love.update(dt)
   gameworld:update(dt)
   if(love.mouse.isDown(1))then

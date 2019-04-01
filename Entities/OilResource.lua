@@ -25,9 +25,17 @@ function OilResource.new(world,x,y,max,current)
   local randomStationarySprite = RandomStationarySprite.new(o, OilResource.spritesheet)
   o:addDrawable(randomStationarySprite)
 
-  local oilMeter = OilMeter.new(o, containsOil, -0.8, -0.6, 0.4,1.2)
+  local oilMeter = OilMeter.new(o, containsOil, -0.8, -0.2, 0.4,1)
   o:addDrawable(oilMeter)
 
   setmetatable(o, OilResource)
   return o
+end
+
+function OilResource:getXRoot()
+  return self.x + 0.5
+end
+
+function OilResource:getYRoot()
+  return self.y + 0.5
 end

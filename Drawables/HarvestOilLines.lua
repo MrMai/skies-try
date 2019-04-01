@@ -24,7 +24,7 @@ function HarvestOilLines:draw(x, y, scale)
   love.graphics.setColor(Oil.harvestColor)
   for o, sour in pairs(self.harvestOilBehavior.sources) do
     if(not sour.behaviors["ContainsOil"]:isEmpty())then
-      love.graphics.line(x + (self.originEntity:getXCenter() * scale), y + (self.originEntity:getYCenter() * scale), x + (sour:getXCenter() * scale), y + (sour:getYCenter() * scale))
+      love.graphics.line(x + (self.originEntity:getXCenter() * scale), y + (self.originEntity:getYCenter() * scale), x + (sour:getXRoot() * scale), y + (sour:getYRoot() * scale))
     end
   end
 end

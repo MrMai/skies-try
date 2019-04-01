@@ -28,6 +28,10 @@ function World.new(name)
   return o
 end
 
+function World:darkened()
+  return 0.5,0.5,0.5
+end
+
 local domain8 = {1,0,   1,1,    0,1,    -1,1,   -1,0,   -1,-1,    0,-1,   1,-1}
 function World:isCorner(x,y)
   local numBlocks = 0
@@ -74,9 +78,14 @@ function World:update(dt)
 end
 
 function World:draw(x, y, scale)
-  local blockDraw = function()
-    self:drawBoxes(x, y, scale)
+  for i in pairs(self.entities) do
+    i:draw(x,y,scale)
   end
+
+  for i in pairs(self.entities) do
+    i:drawUI(x,y,scale)
+  end
+
   --[[
   local lightMask = function()
     self.lightWorld:drawLights(blockDraw, 0, 0)
@@ -85,15 +94,13 @@ function World:draw(x, y, scale)
   love.graphics.stencil(lightMask, "replace", 1)
   love.graphics.setStencilTest("greater", 0)
   ]]--
+  local blockDraw = function()
+    self:drawBoxes(x, y, scale)
+  end
   self.lightWorld:drawLights(blockDraw, 0, 0)
   --self:drawBoxes(x, y, scale)
   self:drawSprites(x,y,scale)
-  for i in pairs(self.entities) do
-    i:draw(x,y,scale)
-  end
-  for i in pairs(self.entities) do
-    i:drawUI(x,y,scale)
-  end
+
 end
 
 function World:drawLightMask(x, y, scale)
@@ -264,11 +271,10 @@ function World:fill(width, height)
 end
 
 function World:drawSprites(x,y,scale)
-  love.graphics.setShader()
   for kx=0,#self-1 do
     for ky=0,#self[1]-1 do
       if(self:get(kx,ky).id ~= 0)then
-        self.spritesheet:draw(self:get(kx,ky).id,x + (scale * kx), y + (scale * ky), scale)
+        self.spritesheet:draw(self:get(kx,ky).id,x + (scale * kx), y + (scale * ky), scale, self:darkened())
     	end
     end
   end
